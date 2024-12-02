@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" method="post">
+<div style="width:1600px;height:200px;background-color:#BEC8F8;margin-top:-35px">
+    <h1 style="text-align:center;font-size:50px;padding-top:60px">Payment Page</h1>
+</div>
+
+   <div style="text-align:center;">
+       <img src="{% static 'WebApp/img/pay2.avif' %}" alt="" height="500px" width="600px">
+   </div>
+<div style="text-align:center;margin-top:-50px">
+    <h2>Proceed to payment {{request.session.name}}</h2>
+
+  <a class="btn btn-primary" type="submit"  style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px;width:200px;height:60px;font-size:20px;text-align:center">Pay</a>
+    <a class="btn btn-danger" type="submit"  style="background-color:#F74B4D;color:white; padding: 10px 20px; border: none; border-radius: 5px;width:200px;font-size:20px;text-align:center;height=70px">Cancel</a>
+</div>
+    </form>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="rzp_test_XrSOnebWyMTP0h"
+    data-amount="{{pay_str}}"
+    data-currency="INR"
+    data-order_id="{{payment}}"
+    data-buttontext=""
+    data-name="Restoran"
+    data-description="Your Daily Dose of Deliciousness"
+    data-image=""
+    data-prefill.name="abc"
+    data-prefill.email="abc@gmail.com"
+    data-theme.color="#4badeb">
+
+</script>
+</body>
+</html>

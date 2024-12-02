@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <form class="forms-sample" action="{% url 'UpdateCuisine' U_id=dat.id %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+<div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Edit Cuisines</h4>
+<!--                    <p class="card-description"> Add your favourite cuisines to our menu! </p>-->
+
+                      <div class="form-group">
+                        <label for="exampleInputName1">Cuisine Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="CuisineName" placeholder="Cuisine Name" value="{{dat.CuisineName}}">
+                      </div>
+
+
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" id="exampleTextarea1" name="Description" rows="4">{{dat.Description}}</textarea>
+                      </div>
+                      <div class="form-group">
+                        <label>Upload Cuisine Image</label>
+                        <img src="{{dat.CuisineImage.url}}" height="200px" width="300px">
+                        <div class="input-group col-xs-12">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button"><input type="file" name="CuisineImage"></button>
+                          </span>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                      <button class="btn btn-dark">Cancel</button>
+
+                  </div>
+                </div>
+              </div>
+</form>
+
+</body>
+</html>
+{% endblock %}

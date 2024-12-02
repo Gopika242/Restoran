@@ -1,0 +1,198 @@
+<!doctype html>
+
+{% extends 'Home.html' %}
+{% block content %}
+{% load static %}
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Restaurant Cart</title>
+
+  <link rel="shortcut icon" href="{% static 'WebApp/img/favicon.png' %}">
+
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'WebApp/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="{% static 'WebApp/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="{% url 'Home' %}" class="nav-item nav-link">Home</a>
+                        <a href="{% url 'About' %}" class="nav-item nav-link">About</a>
+                        <a href="{% url 'Menu' %}" class="nav-item nav-link ">Menu</a>
+                        <a href="{% url 'CartsPage' %}" class="nav-item nav-link active">Cart
+                         <sup>{{cart}}</sup></a>
+
+                          <div class="nav-item dropdown">
+                            {% if request.session.name %}
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Welcome {{request.session.name}}</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'UserLogout' %}" class="dropdown-item">Logout</a>
+<!--                                <a href="{% url 'SignIn' %}" class="dropdown-item">Sign In</a>-->
+                            </div>
+                            {% else %}
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">My Account</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="{% url 'SignUp' %}" class="dropdown-item">Sign Up</a>
+                                <a href="{% url 'SignIn' %}" class="dropdown-item">Sign In</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <a href="{% url 'Contact' %}" class="nav-item nav-link">Contact</a>
+                    </div>
+
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Cart</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="{% url 'Home'%}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">About</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+  <!-- Start Hero Section -->
+  <div class="hero bg-light py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-7 text-center">
+          <h1 class="text-dark">Your Cart</h1>
+          <p class="text-muted">Review your selected dishes before checkout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <div class="untree_co-section before-footer-section">
+    <div class="container">
+      <div class="row mb-5">
+        <form class="col-md-12" method="post">
+          <div class="site-blocks-table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="product-name">Dish</th>
+                  <th class="product-price">Price</th>
+                  <th class="product-quantity">Quantity</th>
+                  <th class="product-total">Total</th>
+                  <th class="product-remove">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in cart1 %}
+                <tr>
+                  <td class="product-name">
+                    <h6>{{ i.DishName }}</h6>
+                  </td>
+                  <td>Rs.{{ i.Price}}</td>
+                  <td>{{ i.Quantity}}</td>
+                  <td>Rs.{{ i.Total}}</td>
+                  <td><a href="{% url 'CartRemove' D_id=i.id %}" class="btn btn-danger btn-sm">X</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row mb-5">
+
+            <div class="col-md-6">
+              <a href="{% url 'Checkout' %}" class="btn btn-outline-secondary btn-block">Continue Ordering</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="row justify-content-end">
+            <div class="col-md-8">
+              <div class="row border-bottom mb-4">
+                <h3 class="text-dark h4 text-uppercase">Cart Totals</h3>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <span class="text-dark">Subtotal</span>
+                </div>
+                <div class="col-md-6 text-right">
+                  <strong class="text-dark">Rs.{{SubTotal}}</strong>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <span class="text-dark">Taxes</span>
+                </div>
+                <div class="col-md-6 text-right">
+                  <strong class="text-dark">Rs.{{ShippingAmount}}</strong>
+                </div>
+              </div>
+              <div class="row mb-5">
+                <div class="col-md-6">
+                  <span class="text-dark">Total Amount</span>
+                </div>
+                <div class="col-md-6 text-right">
+                  <strong class="text-dark">Rs.{{TotalAmount}}</strong>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <a href="{% url 'Checkout' %}" class="btn btn-success btn-lg py-3 btn-block">Proceed to Checkout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-section py-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-left">
+          <p>&copy; <script>document.write(new Date().getFullYear());</script> Restaurant. All Rights Reserved.</p>
+        </div>
+        <div class="col-md-6 text-right">
+          <ul class="list-unstyled d-inline-flex">
+            <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+  <script src="{% static 'Restaurant/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
+{% endblock %}
